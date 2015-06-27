@@ -7,31 +7,17 @@ namespace Bangpound\oEmbed\Provider;
  */
 class StandardProvider implements ProviderInterface
 {
-    private $name;
-    private $urlScheme;
+    private $scheme;
     private $endpoint;
 
-    public function __construct($name, $endpoint, $urlScheme = array())
+    /**
+     * @param $endpoint
+     * @param array $scheme
+     */
+    public function __construct($endpoint, $scheme = array())
     {
-        $this->name = $name;
-        $this->urlScheme = $urlScheme;
+        $this->scheme = $scheme;
         $this->endpoint = $endpoint;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @return array
-     */
-    public function getUrlScheme()
-    {
-        return $this->urlScheme;
     }
 
     /**
@@ -40,5 +26,28 @@ class StandardProvider implements ProviderInterface
     public function getEndpoint()
     {
         return $this->endpoint;
+    }
+
+    /**
+     * Returns whether this class supports the given resource.
+     *
+     * @param string $url    A url
+     * @param array  $params The resource type or null if unknown
+     *
+     * @return bool True if this class supports the given url, false otherwise
+     */
+    public function supports($url, $params = array())
+    {
+        if (empty($this->scheme)) {
+            return false;
+        }
+        $patterns = array();
+        foreach ($this->scheme as $scheme) {
+            $patterns[] = str_replace('\*', '.*', preg_quote($scheme, '#'));
+        }
+
+        $pattern = '#'.implode('|', $patterns).'#i';
+
+        return preg_match($pattern, $url);
     }
 }
