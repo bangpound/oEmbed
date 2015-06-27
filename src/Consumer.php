@@ -39,7 +39,7 @@ class Consumer
         $request = new Psr7\Request('get', $uri);
         $response = $this->client->send($request);
 
-        if ($request->hasHeader('content-type')) {
+        if ($response->hasHeader('content-type')) {
             $format = Psr7\parse_header($response->getHeader('content-type'))[0][0];
         } elseif (isset($params['format'])) {
             $format = $params['format'];
