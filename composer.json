@@ -1,0 +1,44 @@
+{
+    "name": "bangpound/oembed",
+    "description": "oEmbed library",
+    "keywords": [
+        "oembed"
+    ],
+    "homepage": "https://github.com/bangpound/oEmbed",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Benjamin Doherty",
+            "email": "bjd@bangpound.org",
+            "homepage": "https://bangpound.org",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^6.0",
+        "symfony/dom-crawler": "~2.7",
+        "symfony/serializer": "~2.7"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.7",
+        "scrutinizer/ocular": "~1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bangpound\\oEmbed\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Bangpound\\oEmbed\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.0.x-dev"
+        }
+    }
+}
