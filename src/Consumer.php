@@ -49,6 +49,7 @@ class Consumer
 
         $contents = $response->getBody()->getContents();
         switch ($format) {
+            case 'application/xml':
             case 'text/xml':
                 return (array) new \SimpleXMLElement($contents);
             case 'application/json':
