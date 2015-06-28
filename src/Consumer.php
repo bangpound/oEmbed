@@ -5,6 +5,8 @@ namespace Bangpound\oEmbed;
 use Bangpound\oEmbed\Provider\ProviderInterface;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7;
+use Psr\Http\Message\ResponseInterface;
+use Bangpound\oEmbed\Serializer\Serializer;
 
 /**
  * Class Consumer.
@@ -17,11 +19,18 @@ class Consumer
     private $client;
 
     /**
-     * @param ClientInterface $client
+     * @var Serializer
      */
-    public function __construct(ClientInterface $client)
+    private $serializer;
+
+    /**
+     * @param ClientInterface $client
+     * @param Serializer      $serializer
+     */
+    public function __construct(ClientInterface $client, Serializer $serializer)
     {
         $this->client = $client;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -39,34 +48,45 @@ class Consumer
         $request = new Psr7\Request('get', $uri);
         $response = $this->client->send($request);
 
-        if ($response->hasHeader('content-type')) {
-            $format = Psr7\parse_header($response->getHeader('content-type'))[0][0];
-        } elseif (isset($params['format'])) {
-            $format = $params['format'];
-        } else {
-            throw new \Exception();
-        }
+        $data = $response->getBody()->getContents();
+        $format = $this->getFormat($params, $response);
 
-        $contents = $response->getBody()->getContents();
-        switch ($format) {
-            case 'application/xml':
-            case 'text/xml':
-                return (array) new \SimpleXMLElement($contents);
-            case 'application/json':
-                return json_decode($contents, true);
-            default:
-                throw new \Exception();
-        }
+        return $this->serializer->deserialize($data, null, $format);
     }
 
     private static function makeUri(ProviderInterface $provider, $url, $params = array())
     {
-        $uri = new Psr7\Uri($provider->getEndpoint());
+        $uri = \GuzzleHttp\uri_template($provider->getEndpoint(), $params);
+        $uri = new Psr7\Uri($uri);
 
         // All arguments must be urlencoded (as per RFC 1738).
         $query = Psr7\build_query($params, PHP_QUERY_RFC1738);
         $uri = $uri->withQuery($query);
 
         return Psr7\Uri::withQueryValue($uri, 'url', $url);
+    }
+
+    private function getFormat(array $params, ResponseInterface $response)
+    {
+        if ($response->hasHeader('content-type')) {
+            return $this->getFormatFromContentType($response);
+        }
+        if (isset($params['format'])) {
+            return $params['format'];
+        } else {
+            throw new \Exception('Unable to figure out the content type');
+        }
+    }
+
+    private function getFormatFromContentType(ResponseInterface $response)
+    {
+        $contentType = Psr7\parse_header($response->getHeader('content-type'))[0][0];
+        switch ($contentType) {
+            case 'application/xml':
+            case 'text/xml':
+                return 'xml';
+            case 'application/json':
+                return 'json';
+        }
     }
 }
