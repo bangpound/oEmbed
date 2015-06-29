@@ -4,10 +4,8 @@ namespace Bangpound\oEmbed\Provider;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7;
-use GuzzleHttp\RedirectMiddleware;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Symfony\Component\CssSelector\CssSelector;
 use Symfony\Component\DomCrawler\Crawler;
 
 class DiscoverProvider implements ProviderInterface
@@ -24,9 +22,9 @@ class DiscoverProvider implements ProviderInterface
         $client = clone $client;
         /** @var \GuzzleHttp\HandlerStack $handler */
         $handler = $client->getConfig('handler');
-        $handler->push(function(callable $fn) {
+        $handler->push(function (callable $fn) {
 
-            /**
+            /*
              * @param \Psr\Http\Message\RequestInterface $request
              * @param array $options
              * @return \GuzzleHttp\RedirectMiddleware
@@ -43,6 +41,7 @@ class DiscoverProvider implements ProviderInterface
                             ));
                             $response = $fn($request, $options);
                         }
+
                         return $response;
                     });
             };
@@ -53,8 +52,8 @@ class DiscoverProvider implements ProviderInterface
     /**
      * Returns whether this class supports the given resource.
      *
-     * @param string $url A url
-     * @param array $params The resource type or null if unknown
+     * @param string $url    A url
+     * @param array  $params The resource type or null if unknown
      *
      * @return bool True if this class supports the given url, false otherwise
      */
@@ -62,6 +61,7 @@ class DiscoverProvider implements ProviderInterface
     {
         $request = new Psr7\Request('get', $url);
         $response = $this->client->send($request);
+
         return $response->getStatusCode() === 200;
     }
 
@@ -69,6 +69,7 @@ class DiscoverProvider implements ProviderInterface
     {
         $links = $response->getHeader('link');
         $links = Psr7\parse_header($links);
+
         return array_map(array(__CLASS__, 'parseUrl'),
           array_filter($links, function ($link) {
               return ($link['rel'] === 'alternate'
@@ -82,13 +83,15 @@ class DiscoverProvider implements ProviderInterface
     {
         $links = $response->getHeader('link');
         $links = Psr7\parse_header($links);
+
         return array_map(array(__CLASS__, 'parseUrl'),
           array_filter($links, function ($link) {
               return ($link['rel'] === 'shortlink');
           }));
     }
 
-    private static function parseUrl($link) {
+    private static function parseUrl($link)
+    {
         return preg_replace('/^<(.+?)>$/', '\1', $link[0]);
     }
 
@@ -98,6 +101,7 @@ class DiscoverProvider implements ProviderInterface
     public function request($url, $params = array())
     {
         $request = new Psr7\Request('get', $url);
+
         return $request;
     }
 }

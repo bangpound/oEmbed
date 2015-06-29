@@ -37,6 +37,7 @@ class StandardProvider implements ProviderInterface
     public function request($url, $params = array())
     {
         $uri = $this->makeUri($url, $params);
+
         return new Psr7\Request('get', $uri);
     }
 
