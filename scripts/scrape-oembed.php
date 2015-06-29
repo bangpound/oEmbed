@@ -105,7 +105,19 @@ $data = $crawler->filterXPath('//p')->each(function (Crawler $nameCrawler, $i) u
             $endpoint = explode(' ', $provider['endpoint'], 2);
             $provider['endpoint'] = array_shift($endpoint);
             if (!empty($endpoint)) {
-                $provider['note'][] = $endpoint[0];
+                if ($endpoint[0] === '(only supports json)') {
+                    $provider['default']['format'] = 'json';
+                    $provider['requirement']['format'] = 'json';
+                }
+            }
+
+            $matches = array();
+            if (preg_match_all('/\{([^\}]+)\}/', $provider['endpoint'], $matches)) {
+                $requirements = array_combine($matches[1], array_fill(0, count($matches[1]), ''));
+                if (!isset($provider['requirement'])) {
+                    $provider['requirement'] = array();
+                }
+                $provider['requirement'] = array_merge($requirements, $provider['requirement']);
             }
         }
 
