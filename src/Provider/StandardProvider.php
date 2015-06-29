@@ -2,6 +2,8 @@
 
 namespace Bangpound\oEmbed\Provider;
 
+use GuzzleHttp\Psr7;
+
 /**
  * Class StandardProvider.
  */
@@ -9,23 +11,33 @@ class StandardProvider implements ProviderInterface
 {
     private $scheme;
     private $endpoint;
+    /**
+     * @var array
+     */
+    private $requirements;
+    /**
+     * @var array
+     */
+    private $defaults;
 
     /**
      * @param $endpoint
      * @param array $scheme
+     * @param array $requirements
+     * @param array $defaults
      */
-    public function __construct($endpoint, $scheme = array())
+    public function __construct($endpoint, array $scheme = array(), array $requirements = array(), array $defaults = array())
     {
-        $this->scheme = $scheme;
         $this->endpoint = $endpoint;
+        $this->scheme = $scheme;
+        $this->requirements = $requirements;
+        $this->defaults = $defaults;
     }
 
-    /**
-     * @return string
-     */
-    public function getEndpoint()
+    public function request($url, $params = array())
     {
-        return $this->endpoint;
+        $uri = $this->makeUri($url, $params);
+        return new Psr7\Request('get', $uri);
     }
 
     /**
@@ -38,6 +50,7 @@ class StandardProvider implements ProviderInterface
      */
     public function supports($url, $params = array())
     {
+        $params = array_merge($this->defaults, $params);
         if (empty($this->scheme)) {
             return false;
         }
@@ -48,6 +61,19 @@ class StandardProvider implements ProviderInterface
 
         $pattern = '#'.implode('|', $patterns).'#i';
 
-        return preg_match($pattern, $url);
+        return preg_match($pattern, $url) && !array_diff_key($this->requirements, $params);
+    }
+
+    private function makeUri($url, $params = array())
+    {
+        $uri = \GuzzleHttp\uri_template($this->endpoint, array_merge($this->defaults, $params));
+        $uri = new Psr7\Uri($uri);
+        dump($uri);
+
+        // All arguments must be urlencoded (as per RFC 1738).
+        $query = Psr7\build_query($params, PHP_QUERY_RFC1738);
+        $uri = $uri->withQuery($query);
+
+        return Psr7\Uri::withQueryValue($uri, 'url', $url);
     }
 }

@@ -44,26 +44,13 @@ class Consumer
      */
     public function get(ProviderInterface $provider, $url, $params = array())
     {
-        $uri = self::makeUri($provider, $url, $params);
-        $request = new Psr7\Request('get', $uri);
+        $request = $provider->request($url, $params);
         $response = $this->client->send($request);
 
         $data = $response->getBody()->getContents();
         $format = $this->getFormat($params, $response);
 
         return $this->serializer->deserialize($data, null, $format);
-    }
-
-    private static function makeUri(ProviderInterface $provider, $url, $params = array())
-    {
-        $uri = \GuzzleHttp\uri_template($provider->getEndpoint(), $params);
-        $uri = new Psr7\Uri($uri);
-
-        // All arguments must be urlencoded (as per RFC 1738).
-        $query = Psr7\build_query($params, PHP_QUERY_RFC1738);
-        $uri = $uri->withQuery($query);
-
-        return Psr7\Uri::withQueryValue($uri, 'url', $url);
     }
 
     private function getFormat(array $params, ResponseInterface $response)

@@ -8,9 +8,9 @@ namespace Bangpound\oEmbed\Provider;
 interface ProviderInterface
 {
     /**
-     * @return string
+     * @return \Psr\Http\Message\RequestInterface
      */
-    public function getEndpoint();
+    public function request($url, $params = array());
 
     /**
      * Returns whether this class supports the given resource.
