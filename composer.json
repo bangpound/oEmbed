@@ -6,11 +6,17 @@
         "symfony/serializer": "~2.7"
     },
     "require-dev": {
-        "fabpot/goutte": "~3.1"
+        "fabpot/goutte": "~3.1",
+        "phpunit/phpunit": "~4.7"
     },
     "autoload": {
         "psr-4": {
             "Bangpound\\oEmbed\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Bangpound\\oEmbed\\": "tests/"
         }
     },
     "license": "MIT",
