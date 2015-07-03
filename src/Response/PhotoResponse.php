@@ -27,6 +27,6 @@ class PhotoResponse extends Response
      */
     public function __toString()
     {
-        return sprintf('<img src="%s" width="%u" height="%u" alt="%s" />', $this->getUrl(), $this->getWidth(), $this->getHeight(), $this->getTitle());
+        return sprintf('<img src="%s" width="%u" height="%u" alt="%s" />', filter_var($this->getUrl(), FILTER_SANITIZE_FULL_SPECIAL_CHARS), $this->getWidth(), $this->getHeight(), $this->getTitle());
     }
 }
