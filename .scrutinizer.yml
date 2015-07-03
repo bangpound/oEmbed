@@ -8,6 +8,8 @@ coding_style:
         spaces:
             around_operators:
                 concatenation: false
+            before_parentheses:
+                closure_definition: true
 build:
     environment:
         php:
