@@ -89,18 +89,18 @@ class Response
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getThumbnailWidth()
     {
-        return $this->thumbnailWidth;
+        return (int) $this->thumbnailWidth;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getThumbnailHeight()
     {
-        return $this->thumbnailHeight;
+        return (int) $this->thumbnailHeight;
     }
 }

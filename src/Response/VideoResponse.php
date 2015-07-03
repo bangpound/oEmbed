@@ -25,7 +25,7 @@ class VideoResponse extends Response
      */
     public function getHeight()
     {
-        return $this->height;
+        return (int) $this->height;
     }
 
     /**
@@ -33,6 +33,6 @@ class VideoResponse extends Response
      */
     public function getWidth()
     {
-        return $this->width;
+        return (int) $this->width;
     }
 }
