@@ -31,7 +31,7 @@ $command->setCode(function (InputInterface $input, OutputInterface $output) {
     $data = $crawler->filterXPath('//p')->each(function (Crawler $nameCrawler, $i) use ($crawler) {
         $data = array(
             'name' => preg_replace('/^(.+?) \(.+?\)$/', '\1', trim($nameCrawler->text())),
-            'url' => $nameCrawler->filterXPath('//a')->extract('href')[0],
+            'url' => $nameCrawler->filterXPath('//a')->extract(array('href'))[0],
         );
 
         $siblings = $crawler->filterXPath('//p')->eq($i)->nextAll();
@@ -52,14 +52,14 @@ $command->setCode(function (InputInterface $input, OutputInterface $output) {
                     case 'url scheme (video)':
                     case 'url scheme (videos)':
                         $key = 'scheme';
-                        $value = $crawler->filterXPath('//code')->extract('_text');
+                        $value = $crawler->filterXPath('//code')->extract(array('_text'));
                         break;
 
                     // rename the key.
                     case 'api endpoint':
                         $key = 'endpoint';
                     case 'endpoint':
-                        $value = $crawler->filterXPath('//code')->extract('_text');
+                        $value = $crawler->filterXPath('//code')->extract(array('_text'));
                         break;
 
                     case 'supports discovery via <link> tags':
@@ -72,7 +72,7 @@ $command->setCode(function (InputInterface $input, OutputInterface $output) {
                         $key = 'documentation';
                     case 'documentation':
                     case 'example':
-                        $value = $crawler->filterXPath('//a')->extract('href');
+                        $value = $crawler->filterXPath('//a')->extract(array('href'));
                         break;
 
                     default:
