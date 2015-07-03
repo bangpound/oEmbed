@@ -69,7 +69,6 @@ class StandardProvider implements ProviderInterface
     {
         $uri = \GuzzleHttp\uri_template($this->endpoint, array_merge($this->defaults, $params));
         $uri = new Psr7\Uri($uri);
-        dump($uri);
 
         // All arguments must be urlencoded (as per RFC 1738).
         $query = Psr7\build_query($params, PHP_QUERY_RFC1738);
