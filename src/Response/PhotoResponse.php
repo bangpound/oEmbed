@@ -9,7 +9,7 @@ class PhotoResponse extends Response
     /**
      * @var string
      */
-    private $url;
+    protected $url;
 
 
     /**

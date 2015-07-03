@@ -8,7 +8,7 @@ class VideoResponse extends Response
 {
     use DimensionTrait;
 
-    private $html;
+    protected $html;
 
     public function getHtml()
     {
