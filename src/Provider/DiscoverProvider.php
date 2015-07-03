@@ -2,59 +2,41 @@
 
 namespace Bangpound\oEmbed\Provider;
 
+use Guzzle\Http\Message\Request;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\DomCrawler\Crawler;
 
 class DiscoverProvider implements ProviderInterface
 {
-    const LINK_XPATH = '//head/link[@rel = \'alternate\' and substring(@type, string-length(@type) - string-length(\'+oembed\') + 1) = \'+oembed\']';
+    const LINK_ANY_XPATH = '//head/link[@rel = \'alternate\' and (@type = \'application/json+oembed\' or @type = \'text/xml+oembed\')]';
+    const LINK_JSON_XPATH = '//head/link[@rel = \'alternate\' and @type = \'application/json+oembed\']';
+    const LINK_XML_XPATH = '//head/link[@rel = \'alternate\' and @type = \'text/xml+oembed\']';
 
     /**
      * @var \GuzzleHttp\ClientInterface
      */
     private $client;
 
-    public function __construct(ClientInterface $client)
-    {
-        $client = clone $client;
-        /** @var \GuzzleHttp\HandlerStack $handler */
-        $handler = $client->getConfig('handler');
-        $handler->push(self::discover(), 'oembed_discover');
-        $this->client = $client;
-    }
+    /**
+     * @var array
+     */
+    private $map = array(
+      'application/json+oembed' => 'json',
+      'text/xml+oembed' => 'xml',
+    );
 
     /**
-     * @return \Closure
+     * @param \GuzzleHttp\ClientInterface $client
+     * @param array                       $map
      */
-    private static function discover()
+    public function __construct(ClientInterface $client, array $map = null)
     {
-        return function (callable $fn) {
-
-            /*
-             * @param \Psr\Http\Message\RequestInterface $request
-             * @param array $options
-             * @return \GuzzleHttp\RedirectMiddleware
-             */
-            return function (RequestInterface $request, array $options) use ($fn) {
-                return $fn($request, $options)
-                    ->then(function (ResponseInterface $response) use ($fn, $request, $options) {
-                        $contents = $response->getBody()->getContents();
-                        $crawler = new Crawler($contents);
-                        $parts = $crawler->filterXPath(self::LINK_XPATH)->extract('href');
-                        if (!empty($parts)) {
-                            $request = Psr7\modify_request($request, array(
-                                'uri' => new Psr7\Uri($parts[0]),
-                            ));
-                            $response = $fn($request, $options);
-                        }
-
-                        return $response;
-                    });
-            };
-        };
+        $this->client = $client;
+        if (isset($map)) {
+            $this->map = $map;
+        }
     }
 
     /**
@@ -67,40 +49,9 @@ class DiscoverProvider implements ProviderInterface
      */
     public function supports($url, array $params = array())
     {
-        $request = new Psr7\Request('get', $url);
-        $response = $this->client->send($request);
+        $links = $this->discoverLinks($url, $params);
 
-        return $response->getStatusCode() === 200;
-    }
-
-    private static function headerOembedLinks(ResponseInterface $response)
-    {
-        $links = $response->getHeader('link');
-        $links = Psr7\parse_header($links);
-
-        return array_map(array(__CLASS__, 'parseUrl'),
-            array_filter($links, function ($link) {
-                return ($link['rel'] === 'alternate'
-                && isset($link['type'])
-                && strpos($link['type'], '+oembed')
-                );
-            }));
-    }
-
-    private static function headerCanonicalUrls(ResponseInterface $response)
-    {
-        $links = $response->getHeader('link');
-        $links = Psr7\parse_header($links);
-
-        return array_map(array(__CLASS__, 'parseUrl'),
-            array_filter($links, function ($link) {
-                return ($link['rel'] === 'shortlink');
-            }));
-    }
-
-    private static function parseUrl($link)
-    {
-        return preg_replace('/^<(.+?)>$/', '\1', $link[0]);
+        return !empty($links);
     }
 
     /**
@@ -111,8 +62,34 @@ class DiscoverProvider implements ProviderInterface
      */
     public function request($url, array $params = array())
     {
-        $request = new Psr7\Request('get', $url);
+        $links = self::discoverLinks($url, $params);
 
-        return $request;
+        $uri = new Psr7\Uri($links[0][0]);
+
+        return new Psr7\Request('get', $uri);
+    }
+
+    private function discoverLinks($url, array $params = array())
+    {
+        $request = new Psr7\Request('get', $url);
+        $response = $this->client->send($request);
+
+        $links = self::responseBodyOEmbedLinks($response, self::LINK_ANY_XPATH);
+
+        if (!empty($links) && isset($params['format'])) {
+            $links = array_filter($links, function ($link) use ($params) {
+                return isset($this->map[$link[1]]) && $params['format'] === $this->map[$link[1]];
+            });
+        }
+
+        return $links;
+    }
+
+    private static function responseBodyOEmbedLinks(ResponseInterface $response, $xpath)
+    {
+        $contents = $response->getBody()->getContents();
+        $crawler = new Crawler($contents);
+
+        return $crawler->filterXPath($xpath)->extract(array('href', 'type'));
     }
 }
