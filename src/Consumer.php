@@ -48,15 +48,15 @@ class Consumer
         $response = $this->client->send($request);
 
         $data = $response->getBody()->getContents();
-        $format = $this->getFormat($params, $response);
+        $format = self::getFormat($params, $response);
 
         return $this->serializer->deserialize($data, null, $format);
     }
 
-    private function getFormat(array $params, ResponseInterface $response)
+    private static function getFormat(array $params, ResponseInterface $response)
     {
         if ($response->hasHeader('content-type')) {
-            return $this->getFormatFromContentType($response);
+            return self::getFormatFromContentType($response);
         }
         if (isset($params['format'])) {
             return $params['format'];
@@ -65,7 +65,7 @@ class Consumer
         }
     }
 
-    private function getFormatFromContentType(ResponseInterface $response)
+    private static function getFormatFromContentType(ResponseInterface $response)
     {
         $contentType = Psr7\parse_header($response->getHeader('content-type'))[0][0];
         switch ($contentType) {
