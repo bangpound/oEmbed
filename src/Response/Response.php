@@ -2,22 +2,68 @@
 
 namespace Bangpound\oEmbed\Response;
 
+/**
+ * Class Response.
+ */
 class Response
 {
+    /**
+     * @var string
+     */
     protected $type;
+
+    /**
+     * @var string
+     */
     protected $version = '1.0';
+
+    /**
+     * @var string
+     */
     protected $title;
+
+    /**
+     * @var string
+     */
     protected $authorName;
+
+    /**
+     * @var string
+     */
     protected $authorUrl;
+
+    /**
+     * @var string
+     */
     protected $providerName;
+
+    /**
+     * @var string
+     */
     protected $providerUrl;
+
+    /**
+     * @var int
+     */
     protected $cacheAge;
+
+    /**
+     * @var string
+     */
     protected $thumbnailUrl;
+
+    /**
+     * @var int
+     */
     protected $thumbnailWidth;
+
+    /**
+     * @var int
+     */
     protected $thumbnailHeight;
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getType()
     {
@@ -33,7 +79,7 @@ class Response
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getTitle()
     {
@@ -41,7 +87,7 @@ class Response
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getAuthorName()
     {
@@ -49,7 +95,7 @@ class Response
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getAuthorUrl()
     {
@@ -57,7 +103,7 @@ class Response
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getProviderName()
     {
@@ -65,7 +111,7 @@ class Response
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getProviderUrl()
     {
@@ -73,7 +119,7 @@ class Response
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getCacheAge()
     {
@@ -81,7 +127,7 @@ class Response
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getThumbnailUrl()
     {

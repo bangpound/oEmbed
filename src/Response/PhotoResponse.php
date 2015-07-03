@@ -2,6 +2,9 @@
 
 namespace Bangpound\oEmbed\Response;
 
+/**
+ * Class PhotoResponse.
+ */
 class PhotoResponse extends Response
 {
     use DimensionTrait;
@@ -11,7 +14,6 @@ class PhotoResponse extends Response
      */
     protected $url;
 
-
     /**
      * @return string
      */
@@ -20,6 +22,9 @@ class PhotoResponse extends Response
         return $this->url;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         $title = isset($this->title) ? $this->title : null;

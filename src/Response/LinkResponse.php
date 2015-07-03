@@ -3,6 +3,7 @@
 namespace Bangpound\oEmbed\Response;
 
 /**
+ * Class LinkResponse.
  */
 class LinkResponse extends Response
 {

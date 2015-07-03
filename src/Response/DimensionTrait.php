@@ -2,6 +2,9 @@
 
 namespace Bangpound\oEmbed\Response;
 
+/**
+ * Class DimensionTrait.
+ */
 trait DimensionTrait
 {
     /**
