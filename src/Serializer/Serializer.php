@@ -3,12 +3,13 @@
 namespace Bangpound\oEmbed\Serializer;
 
 use Symfony\Component\Serializer\Exception\UnexpectedValueException;
+use Symfony\Component\Serializer\Serializer as SymfonySerializer;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class Serializer implements SerializerInterface
 {
     /**
-     * @var \Symfony\Component\Serializer\Serializer
+     * @var SymfonySerializer
      */
     private $serializer;
 
@@ -22,7 +23,7 @@ class Serializer implements SerializerInterface
         'rich' => 'Bangpound\\oEmbed\\Response\\RichResponse',
     );
 
-    public function __construct(SerializerInterface $serializer, array $map = array())
+    public function __construct(SymfonySerializer $serializer, array $map = array())
     {
         $this->serializer = $serializer;
         if (!empty($map)) {

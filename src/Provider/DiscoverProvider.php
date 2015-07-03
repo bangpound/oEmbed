@@ -35,7 +35,7 @@ class DiscoverProvider implements ProviderInterface
                         $contents = $response->getBody()->getContents();
                         $crawler = new Crawler($contents);
                         $parts = $crawler->filterXPath(self::LINK_XPATH)->extract('href');
-                        if ($parts) {
+                        if (!empty($parts)) {
                             $request = Psr7\modify_request($request, array(
                                 'uri' => new Psr7\Uri($parts[0]),
                             ));

@@ -5,10 +5,10 @@ namespace Bangpound\oEmbed\Provider;
 interface ProviderResolverInterface
 {
     /**
-     * @param $url
-     * @param array $params
+     * @param string $url
+     * @param array  $params
      *
-     * @return bool
+     * @return ProviderInterface|bool
      */
     public function resolve($url, $params = array());
 }

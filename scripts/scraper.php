@@ -55,6 +55,7 @@ $command->setCode(function (InputInterface $input, OutputInterface $output) {
                         $value = $crawler->filterXPath('//code')->extract('_text');
                         break;
 
+                    // rename the key.
                     case 'api endpoint':
                         $key = 'endpoint';
                     case 'endpoint':
@@ -66,6 +67,7 @@ $command->setCode(function (InputInterface $input, OutputInterface $output) {
                         $value = array(true);
                         break;
 
+                    // rename the key.
                     case 'docs':
                         $key = 'documentation';
                     case 'documentation':
