@@ -74,16 +74,17 @@ class DiscoverProvider implements ProviderInterface
         $request = new Psr7\Request('get', $url);
         $response = $this->client->send($request);
 
-        $xpath = self::LINK_ANY_XPATH;
-        if (isset($params['format'])) {
-            switch ($params['format']) {
-                case 'json':
-                    $xpath = self::LINK_JSON_XPATH;
-                    break;
-                case 'xml':
-                    $xpath = self::LINK_XML_XPATH;
-                    break;
-            }
+        $params = array_merge(array('format' => null), $params);
+        switch ($params['format']) {
+            case 'json':
+                $xpath = self::LINK_JSON_XPATH;
+                break;
+            case 'xml':
+                $xpath = self::LINK_XML_XPATH;
+                break;
+            default:
+                $xpath = self::LINK_ANY_XPATH;
+                break;
         }
         $links = self::responseBodyOEmbedLinks($response, $xpath);
 
