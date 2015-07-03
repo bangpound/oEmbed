@@ -7,7 +7,6 @@
         "symfony/serializer": "~2.7"
     },
     "require-dev": {
-        "fabpot/goutte": "~3.1",
         "phpunit/phpunit": "~4.7"
     },
     "autoload": {
