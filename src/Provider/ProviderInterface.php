@@ -2,6 +2,8 @@
 
 namespace Bangpound\oEmbed\Provider;
 
+use Psr\Http\Message\RequestInterface;
+
 /**
  * Interface ProviderInterface.
  */
@@ -11,7 +13,7 @@ interface ProviderInterface
      * @param $url
      * @param array $params
      *
-     * @return \Psr\Http\Message\RequestInterface
+     * @return RequestInterface
      */
     public function request($url, $params = array());
 
