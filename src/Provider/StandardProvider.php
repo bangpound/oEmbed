@@ -55,10 +55,10 @@ class StandardProvider implements ProviderInterface
         if (empty($this->scheme)) {
             return false;
         }
-        $patterns = array();
-        foreach ($this->scheme as $scheme) {
-            $patterns[] = str_replace('\*', '.*', preg_quote($scheme, '#'));
-        }
+
+        $patterns = array_map(function ($scheme) {
+            return str_replace('\*', '.*', preg_quote($scheme, '#'));
+        }, $this->scheme);
 
         $pattern = '#'.implode('|', $patterns).'#i';
 
