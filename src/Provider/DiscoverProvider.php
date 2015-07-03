@@ -22,22 +22,22 @@ class DiscoverProvider implements ProviderInterface
         $client = clone $client;
         /** @var \GuzzleHttp\HandlerStack $handler */
         $handler = $client->getConfig('handler');
-        $handler->push(function (callable $fn) {
+        $handler->push(function(callable $fn) {
 
             /*
              * @param \Psr\Http\Message\RequestInterface $request
              * @param array $options
              * @return \GuzzleHttp\RedirectMiddleware
              */
-            return function (RequestInterface $request, array $options) use ($fn) {
+            return function(RequestInterface $request, array $options) use ($fn) {
                 return $fn($request, $options)
-                    ->then(function (ResponseInterface $response) use ($fn, $request, $options) {
+                    ->then(function(ResponseInterface $response) use ($fn, $request, $options) {
                         $contents = $response->getBody()->getContents();
                         $crawler = new Crawler($contents);
                         $parts = $crawler->filterXPath(self::LINK_XPATH)->extract('href');
                         if ($parts) {
                             $request = Psr7\modify_request($request, array(
-                              'uri' => new Psr7\Uri($parts[0]),
+                                'uri' => new Psr7\Uri($parts[0]),
                             ));
                             $response = $fn($request, $options);
                         }
@@ -71,12 +71,12 @@ class DiscoverProvider implements ProviderInterface
         $links = Psr7\parse_header($links);
 
         return array_map(array(__CLASS__, 'parseUrl'),
-          array_filter($links, function ($link) {
-              return ($link['rel'] === 'alternate'
+            array_filter($links, function ($link) {
+                return ($link['rel'] === 'alternate'
                 && isset($link['type'])
                 && strpos($link['type'], '+oembed')
-              );
-          }));
+                );
+            }));
     }
 
     private static function headerCanonicalUrls(ResponseInterface $response)
@@ -85,9 +85,9 @@ class DiscoverProvider implements ProviderInterface
         $links = Psr7\parse_header($links);
 
         return array_map(array(__CLASS__, 'parseUrl'),
-          array_filter($links, function ($link) {
-              return ($link['rel'] === 'shortlink');
-          }));
+            array_filter($links, function ($link) {
+                return ($link['rel'] === 'shortlink');
+            }));
     }
 
     private static function parseUrl($link)
@@ -99,7 +99,7 @@ class DiscoverProvider implements ProviderInterface
      * @param $url
      * @param array $params
      *
-     * @return string
+     * @return Psr7\Request
      */
     public function request($url, $params = array())
     {
