@@ -84,7 +84,6 @@ class DiscoverProvider implements ProviderInterface
                     $xpath = self::LINK_XML_XPATH;
                     break;
             }
-
         }
         $links = self::responseBodyOEmbedLinks($response, $xpath);
 
