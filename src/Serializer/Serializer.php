@@ -2,7 +2,6 @@
 
 namespace Bangpound\oEmbed\Serializer;
 
-use Symfony\Component\Serializer\Exception\UnexpectedValueException;
 use Symfony\Component\Serializer\Serializer as SymfonySerializer;
 use Symfony\Component\Serializer\SerializerInterface;
 
