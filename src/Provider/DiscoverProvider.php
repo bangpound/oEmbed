@@ -22,16 +22,25 @@ class DiscoverProvider implements ProviderInterface
         $client = clone $client;
         /** @var \GuzzleHttp\HandlerStack $handler */
         $handler = $client->getConfig('handler');
-        $handler->push(function(callable $fn) {
+        $handler->push(self::discover(), 'oembed_discover');
+        $this->client = $client;
+    }
+
+    /**
+     * @return callable
+     */
+    private static function discover()
+    {
+        return function (callable $fn) {
 
             /*
              * @param \Psr\Http\Message\RequestInterface $request
              * @param array $options
              * @return \GuzzleHttp\RedirectMiddleware
              */
-            return function(RequestInterface $request, array $options) use ($fn) {
+            return function (RequestInterface $request, array $options) use ($fn) {
                 return $fn($request, $options)
-                    ->then(function(ResponseInterface $response) use ($fn, $request, $options) {
+                    ->then(function (ResponseInterface $response) use ($fn, $request, $options) {
                         $contents = $response->getBody()->getContents();
                         $crawler = new Crawler($contents);
                         $parts = $crawler->filterXPath(self::LINK_XPATH)->extract('href');
@@ -45,8 +54,7 @@ class DiscoverProvider implements ProviderInterface
                         return $response;
                     });
             };
-        }, 'oembed_discover');
-        $this->client = $client;
+        };
     }
 
     /**
@@ -71,7 +79,7 @@ class DiscoverProvider implements ProviderInterface
         $links = Psr7\parse_header($links);
 
         return array_map(array(__CLASS__, 'parseUrl'),
-            array_filter($links, function($link) {
+            array_filter($links, function ($link) {
                 return ($link['rel'] === 'alternate'
                 && isset($link['type'])
                 && strpos($link['type'], '+oembed')
@@ -85,7 +93,7 @@ class DiscoverProvider implements ProviderInterface
         $links = Psr7\parse_header($links);
 
         return array_map(array(__CLASS__, 'parseUrl'),
-            array_filter($links, function($link) {
+            array_filter($links, function ($link) {
                 return ($link['rel'] === 'shortlink');
             }));
     }
