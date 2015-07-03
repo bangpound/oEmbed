@@ -43,6 +43,12 @@ class StandardProvider implements ProviderInterface
         $this->defaults = $defaults;
     }
 
+    /**
+     * @param $url
+     * @param array $params
+     *
+     * @return \GuzzleHttp\Psr7\Request
+     */
     public function request($url, $params = array())
     {
         $uri = $this->makeUri($url, $params);
@@ -74,6 +80,12 @@ class StandardProvider implements ProviderInterface
         return preg_match($pattern, $url) && !array_diff_key($this->requirements, $params);
     }
 
+    /**
+     * @param $url
+     * @param array $params
+     *
+     * @return \Psr\Http\Message\UriInterface
+     */
     private function makeUri($url, $params = array())
     {
         $uri = \GuzzleHttp\uri_template($this->endpoint, array_merge($this->defaults, $params));

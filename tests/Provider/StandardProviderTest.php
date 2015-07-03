@@ -3,37 +3,44 @@
 namespace Bangpound\oEmbed\Test\Provider;
 
 use Bangpound\oEmbed\Provider\StandardProvider;
-use Bangpound\oEmbed\Provider\ProviderInterface;
 
 class StandardProviderTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var ProviderInterface
+     * @dataProvider provideSupport
      */
-    private $provider;
-
-    public function setUp()
+    public function testSupport($scheme, $url, array $params = array(), $expected)
     {
-        $this->provider = new StandardProvider('http://example.com/oembed', array(
-          'http://*.example.com/*',
-          'https://example.com/video/*',
-        ));
+        $provider = new StandardProvider('', $scheme);
+        $this->assertEquals($expected, $provider->supports($url));
     }
 
-    public function testSupport()
+    /**
+     * @dataProvider provideRequest
+     */
+    public function testRequest($url, array $params = array())
     {
-        $this->assertFalse($this->provider->supports('http://example.com/video'));
-        $this->assertTrue($this->provider->supports('http://video.example.com/something'));
-        $this->assertFalse($this->provider->supports('http://example.com/video/something'));
-        $this->assertTrue($this->provider->supports('https://example.com/video/something'));
+        $provider = new StandardProvider('');
+        $request = $provider->request($url, $params);
+        $this->assertInstanceOf('Psr\\Http\\Message\\RequestInterface', $request);
     }
 
-    public function testRequest()
+    public function provideSupport()
     {
-        $request = $this->provider->request('http://video.example.com/something');
-        $this->assertInstanceOf('Psr\\Http\\Message\\RequestInterface', $request);
+        return array(
+          [array('http://*.example.com/*', 'https://example.com/video/*'), 'http://example.com/video', array(), false],
+          [array('http://*.example.com/*', 'https://example.com/video/*'), 'http://video.example.com/something', array(), true],
+          [array('http://*.example.com/*', 'https://example.com/video/*'), 'http://example.com/video/something', array(), false],
+          [array('http://*.example.com/*', 'https://example.com/video/*'), 'https://example.com/video/something', array(), true],
+          [array(), 'https://example.com/video/something', array(), false],
+        );
+    }
 
-        $request = $this->provider->request('https://example.com/video/something');
-        $this->assertInstanceOf('Psr\\Http\\Message\\RequestInterface', $request);
+    public function provideRequest()
+    {
+        return array(
+          ['http://video.example.com/something'],
+          ['https://example.com/video/something'],
+        );
     }
 }
