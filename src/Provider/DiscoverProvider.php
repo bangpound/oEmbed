@@ -96,6 +96,9 @@ class DiscoverProvider implements ProviderInterface
     }
 
     /**
+     * @param $url
+     * @param array $params
+     *
      * @return string
      */
     public function request($url, $params = array())
