@@ -2,6 +2,7 @@
 
 namespace Bangpound\oEmbed;
 
+use Bangpound\oEmbed\Exception\UnknownFormatException;
 use Bangpound\oEmbed\Provider\ProviderInterface;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7;
@@ -61,7 +62,7 @@ class Consumer
         if (isset($params['format'])) {
             return $params['format'];
         } else {
-            throw new \Exception('Unable to figure out the content type');
+            throw new UnknownFormatException('Unable to figure out the format');
         }
     }
 
@@ -74,6 +75,8 @@ class Consumer
                 return 'xml';
             case 'application/json':
                 return 'json';
+            default:
+                throw new UnknownFormatException('Content type header does not map to a supported format');
         }
     }
 }
