@@ -18,6 +18,7 @@ use Symfony\Component\Yaml\Yaml;
 $application = new Application('oEmbed Provider Scraper');
 
 $command = $application->register('scrape:oembed');
+$command->setDescription('Scrapes provider data from oembed.com');
 $command->addOption('format', null, InputOption::VALUE_REQUIRED, 'The output format (json or yaml)', 'json');
 $command->setCode(function (InputInterface $input, OutputInterface $output) {
     $client = new Client();
