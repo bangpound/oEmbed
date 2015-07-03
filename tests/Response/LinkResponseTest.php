@@ -18,14 +18,14 @@ class LinkResponseTest extends \PHPUnit_Framework_TestCase
         $property->setAccessible(true);
         $property->setValue($response, $title);
 
-        $this->assertEquals($string, (string) $response);
+        $this->assertContains((string) $response, $string);
     }
 
     public function responseProvider()
     {
         return array(
-            ['title', '<a href="%s">title</a>'],
-            ['title & title', '<a href="%s">title &amp; title</a>'],
+            ['title', ['<a href="%s">title</a>']],
+            ['title & title', ['<a href="%s">title &amp; title</a>','<a href="%s">title &#38; title</a>']],
         );
     }
 }
