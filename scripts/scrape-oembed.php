@@ -12,19 +12,19 @@ $crawler = $crawler->filterXPath('//a[@id = \'section7.1\']')->nextAll();
 $crawler->removeAll($crawler->filterXPath('//a[@id = \'section7.2\']')->nextAll());
 $crawler->removeAll($crawler->filterXPath('//a[@id = \'section7.2\']'));
 
-$data = $crawler->filterXPath('//p')->each(function (Crawler $nameCrawler, $i) use ($crawler) {
+$data = $crawler->filterXPath('//p')->each(function(Crawler $nameCrawler, $i) use ($crawler) {
     $data = array(
-      'name' => preg_replace('/^(.+?) \(.+?\)$/', '\1', trim($nameCrawler->text())),
-      'url' => $nameCrawler->filterXPath('//a')->extract('href')[0],
+        'name' => preg_replace('/^(.+?) \(.+?\)$/', '\1', trim($nameCrawler->text())),
+        'url' => $nameCrawler->filterXPath('//a')->extract('href')[0],
     );
 
     $siblings = $crawler->filterXPath('//p')->eq($i)->nextAll();
     $siblings->removeAll($siblings->filterXPath('//p')->eq(0)->nextAll());
     $siblings->removeAll($siblings->filterXPath('//p')->eq(0));
 
-    $providers = $siblings->filter('ul')->each(function (Crawler $crawler) {
+    $providers = $siblings->filter('ul')->each(function(Crawler $crawler) {
         $provider = array();
-        $crawler->filterXPath('//li')->each(function (Crawler $crawler) use (&$provider) {
+        $crawler->filterXPath('//li')->each(function(Crawler $crawler) use (&$provider) {
 
             // Key names are letters and spaces only.
             $key = strtolower(preg_replace('/^([A-Za-z<>\s\(\)]+?):.+?$/', '\1', trim($crawler->text())));

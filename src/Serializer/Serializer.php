@@ -16,10 +16,10 @@ class Serializer implements SerializerInterface
      * @var array
      */
     private $map = array(
-      'video' => 'Bangpound\\oEmbed\\Response\\VideoResponse',
-      'photo' => 'Bangpound\\oEmbed\\Response\\PhotoResponse',
-      'link' => 'Bangpound\\oEmbed\\Response\\LinkResponse',
-      'rich' => 'Bangpound\\oEmbed\\Response\\RichResponse',
+        'video' => 'Bangpound\\oEmbed\\Response\\VideoResponse',
+        'photo' => 'Bangpound\\oEmbed\\Response\\PhotoResponse',
+        'link' => 'Bangpound\\oEmbed\\Response\\LinkResponse',
+        'rich' => 'Bangpound\\oEmbed\\Response\\RichResponse',
     );
 
     public function __construct(SerializerInterface $serializer, array $map = array())
