@@ -15,7 +15,7 @@ interface ProviderInterface
      *
      * @return RequestInterface
      */
-    public function request($url, $params = array());
+    public function request($url, array $params = array());
 
     /**
      * Returns whether this class supports the given url.
@@ -25,5 +25,5 @@ interface ProviderInterface
      *
      * @return bool True if this class supports the given url, false otherwise
      */
-    public function supports($url, $params = array());
+    public function supports($url, array $params = array());
 }

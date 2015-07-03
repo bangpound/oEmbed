@@ -65,7 +65,7 @@ class DiscoverProvider implements ProviderInterface
      *
      * @return bool True if this class supports the given url, false otherwise
      */
-    public function supports($url, $params = array())
+    public function supports($url, array $params = array())
     {
         $request = new Psr7\Request('get', $url);
         $response = $this->client->send($request);
@@ -109,7 +109,7 @@ class DiscoverProvider implements ProviderInterface
      *
      * @return Psr7\Request
      */
-    public function request($url, $params = array())
+    public function request($url, array $params = array())
     {
         $request = new Psr7\Request('get', $url);
 

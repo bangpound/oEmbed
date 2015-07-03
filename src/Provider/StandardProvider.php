@@ -49,7 +49,7 @@ class StandardProvider implements ProviderInterface
      *
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function request($url, $params = array())
+    public function request($url, array $params = array())
     {
         $uri = $this->makeUri($url, $params);
 
@@ -64,7 +64,7 @@ class StandardProvider implements ProviderInterface
      *
      * @return bool True if this class supports the given url, false otherwise
      */
-    public function supports($url, $params = array())
+    public function supports($url, array $params = array())
     {
         $params = array_merge($this->defaults, $params);
         if (empty($this->scheme)) {
