@@ -9,12 +9,21 @@ use GuzzleHttp\Psr7;
  */
 class StandardProvider implements ProviderInterface
 {
+    /**
+     * @var array
+     */
     private $scheme;
+
+    /**
+     * @var string
+     */
     private $endpoint;
+
     /**
      * @var array
      */
     private $requirements;
+
     /**
      * @var array
      */
