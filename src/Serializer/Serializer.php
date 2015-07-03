@@ -22,10 +22,10 @@ class Serializer implements SerializerInterface
         'rich' => 'Bangpound\\oEmbed\\Response\\RichResponse',
     );
 
-    public function __construct(SymfonySerializer $serializer, array $map = array())
+    public function __construct(SymfonySerializer $serializer, array $map = null)
     {
         $this->serializer = $serializer;
-        if (!empty($map)) {
+        if (isset($map)) {
             $this->map = $map;
         }
     }
