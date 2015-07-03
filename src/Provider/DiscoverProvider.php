@@ -71,7 +71,7 @@ class DiscoverProvider implements ProviderInterface
         $links = Psr7\parse_header($links);
 
         return array_map(array(__CLASS__, 'parseUrl'),
-            array_filter($links, function ($link) {
+            array_filter($links, function($link) {
                 return ($link['rel'] === 'alternate'
                 && isset($link['type'])
                 && strpos($link['type'], '+oembed')
@@ -85,7 +85,7 @@ class DiscoverProvider implements ProviderInterface
         $links = Psr7\parse_header($links);
 
         return array_map(array(__CLASS__, 'parseUrl'),
-            array_filter($links, function ($link) {
+            array_filter($links, function($link) {
                 return ($link['rel'] === 'shortlink');
             }));
     }
