@@ -6,9 +6,9 @@ namespace Bangpound\oEmbed\Response;
  */
 class VideoResponse extends Response
 {
+    use DimensionTrait;
+
     private $html;
-    private $height;
-    private $width;
 
     public function getHtml()
     {
@@ -18,21 +18,5 @@ class VideoResponse extends Response
     public function __toString()
     {
         return $this->getHtml();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getHeight()
-    {
-        return (int) $this->height;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getWidth()
-    {
-        return (int) $this->width;
     }
 }

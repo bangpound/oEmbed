@@ -4,19 +4,13 @@ namespace Bangpound\oEmbed\Response;
 
 class PhotoResponse extends Response
 {
+    use DimensionTrait;
+
     /**
      * @var string
      */
     private $url;
 
-    /**
-     * @var string
-     */
-    private $width;
-    /**
-     * @var string
-     */
-    private $height;
 
     /**
      * @return string
@@ -24,22 +18,6 @@ class PhotoResponse extends Response
     public function getUrl()
     {
         return $this->url;
-    }
-
-    /**
-     * @return string
-     */
-    public function getWidth()
-    {
-        return $this->width;
-    }
-
-    /**
-     * @return string
-     */
-    public function getHeight()
-    {
-        return $this->height;
     }
 
     public function __toString()
