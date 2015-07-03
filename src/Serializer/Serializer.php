@@ -15,12 +15,19 @@ class Serializer implements SerializerInterface
     /**
      * @var array
      */
-    private $map;
+    private $map = array(
+      'video' => 'Bangpound\\oEmbed\\Response\\VideoResponse',
+      'photo' => 'Bangpound\\oEmbed\\Response\\PhotoResponse',
+      'link' => 'Bangpound\\oEmbed\\Response\\LinkResponse',
+      'rich' => 'Bangpound\\oEmbed\\Response\\RichResponse',
+    );
 
     public function __construct(SerializerInterface $serializer, array $map = array())
     {
         $this->serializer = $serializer;
-        $this->map = $map;
+        if (!empty($map)) {
+            $this->map = $map;
+        }
     }
 
     public function deserialize($data, $type, $format, array $context = array())
