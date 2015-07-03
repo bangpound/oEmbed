@@ -33,21 +33,12 @@ class Serializer implements SerializerInterface
 
     public function deserialize($data, $type, $format, array $context = array())
     {
-        if ($type) {
-            return $this->serializer->deserialize($data, $type, $format, $context);
-        }
-
-        if (!$this->serializer->supportsDecoding($format)) {
-            throw new UnexpectedValueException(sprintf('Deserialization for the format %s is not supported', $format));
-        }
-
-        $data = $this->serializer->decode($data, $format, $context);
-
         if (!$type) {
-            $type = isset($this->map[$data['type']]) ? $this->map[$data['type']] : 'Bangpound\oEmbed\Response\Response';
+            $temp = $this->serializer->decode($data, $format, $context);
+            $type = isset($this->map[$temp['type']]) ? $this->map[$temp['type']] : 'Bangpound\\oEmbed\\Response\\Response';
         }
 
-        return $this->serializer->denormalize($data, $type, $format, $context);
+        return $this->serializer->deserialize($data, $type, $format, $context);
     }
 
     public function serialize($data, $format, array $context = array())
