@@ -27,7 +27,7 @@ class DiscoverProvider implements ProviderInterface
     }
 
     /**
-     * @return callable
+     * @return \Closure
      */
     private static function discover()
     {
