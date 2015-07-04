@@ -7,9 +7,6 @@ namespace Bangpound\oEmbed\Response;
  */
 class LinkResponse extends Response
 {
-    /**
-     * {@inheritdoc}
-     */
     public function __toString()
     {
         return sprintf('<a href="%%s">%s</a>', filter_var($this->getTitle(), FILTER_SANITIZE_FULL_SPECIAL_CHARS));
