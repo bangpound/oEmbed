@@ -19,8 +19,8 @@
             {
                 "endpoint": "http:\/\/www.youtube.com\/oembed",
                 "discovery": true,
-                "example": ["http:\/\/www.youtube.com\/oembed?url=http%3A\/\/www.youtube.com\/watch?v%3D-UUx10KOWIE&format=xml"],
-                "test": ["http:\/\/www.youtube.com\/watch?v=-UUx10KOWIE"]
+                "example": ["http:\/\/www.youtube.com\/oembed?url=http%3A\/\/www.youtube.com\/watch?v%3DC0DPdy98e4c&format=xml"],
+                "test": ["http:\/\/www.youtube.com\/watch?v=C0DPdy98e4c"]
             }
         ]
     },
@@ -177,7 +177,10 @@
         "url": "http:\/\/www.iFixit.com",
         "providers": [
             {
-                "scheme": ["http:\/\/www.ifixit.com\/Guide\/View\/*","http:\/\/www.ifixit.com\/Teardown\/*"],
+                "scheme": [
+                    "http:\/\/www.ifixit.com\/Guide\/View\/*",
+                    "http:\/\/www.ifixit.com\/Teardown\/*"
+                ],
                 "endpoint": "http:\/\/www.ifixit.com\/Embed",
                 "documentation": "http:\/\/www.ifixit.com\/api\/doc\/embed",
                 "example": ["http:\/\/www.ifixit.com\/Embed?url=http%3A%2F%2Fwww.ifixit.com%2FTeardown%2FiPhone-4-Teardown%2F3130%2F1&format=json"],
@@ -367,7 +370,10 @@
         "url": "http:\/\/www.screenr.com\/",
         "providers": [
             {
-                "scheme": ["http:\/\/www.screenr.com\/*"],
+                "scheme": [
+                    "http:\/\/www.screenr.com\/*",
+                    "http:\/\/screenr.com\/*"
+                ],
                 "endpoint": "http:\/\/www.screenr.com\/api\/oembed.{format}",
                 "example": ["http:\/\/www.screenr.com\/api\/oembed.xml?url=http:\/\/screenr.com\/3jns"],
                 "test": ["http:\/\/screenr.com\/3jns"],
@@ -396,7 +402,10 @@
                 "scheme": [
                     "http:\/\/*.polldaddy.com\/s\/*",
                     "http:\/\/*.polldaddy.com\/poll\/*",
-                    "http:\/\/*.polldaddy.com\/ratings\/*"
+                    "http:\/\/*.polldaddy.com\/ratings\/*",
+                    "http:\/\/polldaddy.com\/s\/*",
+                    "http:\/\/polldaddy.com\/poll\/*",
+                    "http:\/\/polldaddy.com\/ratings\/*"
                 ],
                 "endpoint": "http:\/\/polldaddy.com\/oembed\/",
                 "documentation": "http:\/\/support.polldaddy.com\/oembed\/",
@@ -495,6 +504,7 @@
             {
                 "scheme": [
                     "http:\/\/www.mobypicture.com\/user\/*\/view\/*",
+                    "http:\/\/mobypicture.com\/user\/*\/view\/*",
                     "http:\/\/moby.to\/*"
                 ],
                 "endpoint": "http:\/\/api.mobypicture.com\/oEmbed",
@@ -520,7 +530,10 @@
         "url": "https:\/\/cacoo.com",
         "providers": [
             {
-                "scheme": ["https:\/\/cacoo.com\/diagrams\/*"],
+                "scheme": [
+                    "https:\/\/cacoo.com\/diagrams\/*",
+                    "http:\/\/cacoo.com\/diagrams\/*"
+                ],
                 "endpoint": "http:\/\/cacoo.com\/oembed.{format}",
                 "documentation": "https:\/\/cacoo.com\/lang\/en\/api_oembed",
                 "example": ["http:\/\/cacoo.com\/oembed.xml?url=http:\/\/cacoo.com\/diagrams\/m9uZtizE5I2GkFR6"],
@@ -759,7 +772,10 @@
         "url": "http:\/\/blip.tv\/",
         "providers": [
             {
-                "scheme": ["http:\/\/*.blip.tv\/*\/*"],
+                "scheme": [
+                    "http:\/\/*.blip.tv\/*\/*",
+                    "http:\/\/blip.tv\/*\/*"
+                ],
                 "endpoint": "http:\/\/blip.tv\/oembed\/",
                 "example": ["http:\/\/blip.tv\/oembed\/?url=http:\/\/blip.tv\/nostalgiacritic\/nostalgia-critic-sailor-moon-6625851"],
                 "test": ["http:\/\/blip.tv\/nostalgiacritic\/nostalgia-critic-sailor-moon-6625851"],
@@ -775,6 +791,7 @@
             {
                 "scheme": [
                     "http:\/\/*.yfrog.com\/*",
+                    "http:\/\/yfrog.com\/*",
                     "http:\/\/yfrog.us\/*"
                 ],
                 "endpoint": "",
@@ -807,7 +824,12 @@
         "url": "http:\/\/soundcloud.com\/",
         "providers": [
             {
-                "scheme": ["http:\/\/soundcloud.com\/*"],
+                "scheme": [
+                    "http:\/\/soundcloud.com\/*",
+                    "https:\/\/soundcloud.com\/*",
+                    "http:\/\/www.soundcloud.com\/*",
+                    "https:\/\/www.soundcloud.com\/*"
+                ],
                 "endpoint": "https:\/\/soundcloud.com\/oembed",
                 "example": ["https:\/\/soundcloud.com\/oembed?url=https:\/\/www.soundcloud.com\/comedy-central\/the-unf-kables-dave-attell\/&format=xml"],
                 "test": ["https:\/\/www.soundcloud.com\/comedy-central\/the-unf-kables-dave-attell\/"]
@@ -913,7 +935,8 @@
             {
                 "scheme": [
                     "http:\/\/meetup.com\/*",
-                    "http:\/\/meetu.ps\/*"
+                    "http:\/\/meetu.ps\/*",
+                    "http:\/\/www.meetup.com\/*"
                 ],
                 "endpoint": "https:\/\/api.meetup.com\/oembed",
                 "documentation": "http:\/\/www.meetup.com\/meetup_api\/docs\/oembed\/",
@@ -958,7 +981,10 @@
         "url": "http:\/\/www.edocr.com",
         "providers": [
             {
-                "scheme": ["http:\/\/edocr.com\/docs\/*"],
+                "scheme": [
+                    "http:\/\/edocr.com\/docs\/*",
+                    "http:\/\/www.edocr.com\/doc\/*"
+                ],
                 "endpoint": "http:\/\/edocr.com\/api\/oembed",
                 "documentation": "http:\/\/www.edocr.com\/oembed-documentation",
                 "example": ["http:\/\/www.edocr.com\/api\/oembed\/?format=json&url=http:\/\/www.edocr.com\/doc\/144677\/capillary-technologies-corporate-brochure"],
@@ -1082,7 +1108,10 @@
         "url": "https:\/\/theysaidso.com\/",
         "providers": [
             {
-                "scheme": ["https:\/\/theysaidso.com\/image\/*"],
+                "scheme": [
+                    "https:\/\/theysaidso.com\/image\/*",
+                    "https:\/\/theysaidso.com\/i\/*"
+                ],
                 "endpoint": "https:\/\/theysaidso.com\/extensions\/oembed\/",
                 "example": ["https:\/\/theysaidso.com\/extensions\/oembed?url=https:\/\/theysaidso.com\/i\/13IGilhK08STqiDI5xGk_geF&format=json"],
                 "discovery": true,
