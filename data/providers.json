@@ -332,7 +332,7 @@
         "url": "http:\/\/mixcloud.com\/",
         "providers": [
             {
-                "scheme": ["http:\/\/www.mixcloud.com\/*\/*"],
+                "scheme": ["http:\/\/www.mixcloud.com\/*\/*\/"],
                 "endpoint": "http:\/\/www.mixcloud.com\/oembed\/",
                 "documentation": "http:\/\/www.mixcloud.com\/developers\/documentation\/",
                 "example": ["http:\/\/www.mixcloud.com\/oembed\/?url=http%3A\/\/www.mixcloud.com\/TechnoLiveSets\/jon_rundell-live-electrobeach-festival-benidorm-16-08-2013\/&format=xml"],
@@ -534,7 +534,7 @@
         "url": "http:\/\/www.dipity.com",
         "providers": [
             {
-                "scheme": ["http:\/\/www.dipity.com\/*\/*"],
+                "scheme": ["http:\/\/www.dipity.com\/*\/*\/"],
                 "endpoint": "http:\/\/www.dipity.com\/oembed\/timeline\/",
                 "example": ["http:\/\/www.dipity.com\/oembed\/timeline\/?format=xml&url=http:\/\/www.dipity.com\/ragutier\/Historia_de_la_Web\/"],
                 "test": ["http:\/\/www.dipity.com\/ragutier\/Historia_de_la_Web\/"]
