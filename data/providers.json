@@ -54,18 +54,6 @@
         ]
     },
     {
-        "name": "Revision3",
-        "url": "http:\/\/revision3.com\/",
-        "providers": [
-            {
-                "scheme": ["http:\/\/*.revision3.com\/*"],
-                "endpoint": "http:\/\/revision3.com\/api\/oembed\/",
-                "example": ["http:\/\/revision3.com\/api\/oembed\/?url=http%3A\/\/revision3.com\/diggnation\/2008-04-17xsanned\/&format=xml"],
-                "test": ["http:\/\/revision3.com\/diggnation\/2008-04-17xsanned\/"]
-            }
-        ]
-    },
-    {
         "name": "Hulu",
         "url": "http:\/\/www.hulu.com\/",
         "providers": [
