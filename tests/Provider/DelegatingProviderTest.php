@@ -28,6 +28,7 @@ class DelegatingProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideRequest
      *
+     * @param $scheme
      * @param $url
      * @param array $params
      */
