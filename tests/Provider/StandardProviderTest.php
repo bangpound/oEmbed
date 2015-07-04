@@ -8,15 +8,23 @@ class StandardProviderTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider provideSupport
+     *
+     * @param $scheme
+     * @param $url
+     * @param array $params
+     * @param $expected
      */
     public function testSupport($scheme, $url, array $params = array(), $expected)
     {
         $provider = new StandardProvider('', $scheme);
-        $this->assertEquals($expected, $provider->supports($url));
+        $this->assertEquals($expected, $provider->supports($url, $params));
     }
 
     /**
      * @dataProvider provideRequest
+     *
+     * @param $url
+     * @param array $params
      */
     public function testRequest($url, array $params = array())
     {
