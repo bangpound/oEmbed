@@ -52,7 +52,7 @@ $command->setCode(function (InputInterface $input, OutputInterface $output) {
                     case 'url scheme (video)':
                     case 'url scheme (videos)':
                         $key = 'scheme';
-                        $value = $crawler->filterXPath('//code')->extract(array('_text'));
+                        $value = array_map(function ($value) { return trim($value, '/'); }, $crawler->filterXPath('//code')->extract(array('_text')));
                         break;
 
                     case 'api endpoint':
