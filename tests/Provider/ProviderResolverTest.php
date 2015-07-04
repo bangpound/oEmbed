@@ -22,8 +22,19 @@ class ProviderResolverTest extends \PHPUnit_Framework_TestCase
         $url = 'http://deadend.com';
         $this->assertFalse($resolver->resolve($url));
 
-        foreach ($resolver->getProviders() as $provider) {
-            $this->assertInstanceOf('Bangpound\\oEmbed\\Provider\\ProviderInterface', $provider);
-        }
+        $this->assertContainsOnlyInstancesOf('Bangpound\\oEmbed\\Provider\\ProviderInterface', $resolver->getProviders());
+    }
+
+    public function testEmptyResolve()
+    {
+        $resolver = new ProviderResolver();
+
+        $url = 'http://example.com/video/1';
+        $this->assertFalse($resolver->resolve($url));
+
+        $url = 'http://deadend.com';
+        $this->assertFalse($resolver->resolve($url));
+
+        $this->assertCount(0, $resolver->getProviders());
     }
 }
