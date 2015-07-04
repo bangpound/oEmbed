@@ -115,7 +115,7 @@ $command->setCode(function (InputInterface $input, OutputInterface $output) {
                 }
 
                 if (isset($provider['test'])) {
-                    $provider['test'] = array_unique($provider['test']);
+                    $provider['test'] = array_values(array_unique($provider['test']));
                 }
             }
 

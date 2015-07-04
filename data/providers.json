@@ -710,10 +710,10 @@
                     "http:\/\/coub.com\/api\/oembed.xml?url=http:\/\/coub.com\/embed\/um0um0",
                     "http:\/\/coub.com\/api\/oembed.json?url=http:\/\/coub.com\/embed\/um0um0"
                 ],
-                "test": {
-                    "0": "http:\/\/coub.com\/view\/um0um0",
-                    "2": "http:\/\/coub.com\/embed\/um0um0"
-                },
+                "test": [
+                    "http:\/\/coub.com\/view\/um0um0",
+                    "http:\/\/coub.com\/embed\/um0um0"
+                ],
                 "requirement": {"format": ""}
             }
         ]
