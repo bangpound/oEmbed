@@ -24,7 +24,7 @@ class ProviderResolver implements ProviderResolverInterface
     /**
      * {@inheritdoc}
      */
-    public function resolve($url, $params = array())
+    public function resolve($url, array $params = array())
     {
         foreach ($this->providers as $provider) {
             if ($provider->supports($url, $params)) {

@@ -10,5 +10,5 @@ interface ProviderResolverInterface
      *
      * @return ProviderInterface|bool
      */
-    public function resolve($url, $params = array());
+    public function resolve($url, array $params = array());
 }
