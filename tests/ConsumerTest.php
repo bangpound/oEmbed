@@ -10,6 +10,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
+use Negotiation\FormatNegotiator;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
@@ -25,7 +26,8 @@ class ConsumerTest extends \PHPUnit_Framework_TestCase
         $provider = new StandardProvider('');
         $serializer = new \Symfony\Component\Serializer\Serializer();
         $serializer = new Serializer($serializer);
-        $consumer = new Consumer($client, $provider, $serializer);
+        $negotiator = new FormatNegotiator();
+        $consumer = new Consumer($client, $provider, $serializer, $negotiator);
     }
 
     /**
@@ -68,7 +70,9 @@ class ConsumerTest extends \PHPUnit_Framework_TestCase
         ]);
         $serializer = new Serializer($serializer);
 
-        $consumer = new Consumer($client, $provider, $serializer);
+        $negotiator = new FormatNegotiator();
+
+        $consumer = new Consumer($client, $provider, $serializer, $negotiator);
         $response = $consumer->get($url, $params);
 
         $this->assertInstanceOf('Bangpound\\oEmbed\\Response\\Response',
@@ -84,7 +88,8 @@ class ConsumerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Bangpound\oEmbed\Exception\UnknownFormatException
+     * @expectedException \Symfony\Component\Serializer\Exception\RuntimeException
+     * @expectedExceptionMessageRegExp /No decoder found for format "\w+"./
      */
     public function testGetUnknownContentTypeException()
     {
