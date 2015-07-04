@@ -22,9 +22,10 @@ class ConsumerTest extends \PHPUnit_Framework_TestCase
     public function test__construct()
     {
         $client = new Client();
+        $provider = new StandardProvider('');
         $serializer = new \Symfony\Component\Serializer\Serializer();
         $serializer = new Serializer($serializer);
-        $consumer = new Consumer($client, $serializer);
+        $consumer = new Consumer($client, $provider, $serializer);
     }
 
     /**
@@ -67,8 +68,8 @@ class ConsumerTest extends \PHPUnit_Framework_TestCase
         ]);
         $serializer = new Serializer($serializer);
 
-        $consumer = new Consumer($client, $serializer);
-        $response = $consumer->get($provider, $url, $params);
+        $consumer = new Consumer($client, $provider, $serializer);
+        $response = $consumer->get($url, $params);
 
         $this->assertInstanceOf('Bangpound\\oEmbed\\Response\\Response',
           $response);

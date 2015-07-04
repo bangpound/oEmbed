@@ -20,22 +20,28 @@ class Consumer
     private $client;
 
     /**
+     * @var ProviderInterface
+     */
+    private $provider;
+
+    /**
      * @var Serializer
      */
     private $serializer;
 
     /**
-     * @param ClientInterface $client
-     * @param Serializer      $serializer
+     * @param ClientInterface   $client
+     * @param ProviderInterface $provider
+     * @param Serializer        $serializer
      */
-    public function __construct(ClientInterface $client, Serializer $serializer)
+    public function __construct(ClientInterface $client, ProviderInterface $provider, Serializer $serializer)
     {
         $this->client = $client;
+        $this->provider = $provider;
         $this->serializer = $serializer;
     }
 
     /**
-     * @param ProviderInterface $provider
      * @param $url
      * @param array $params
      *
@@ -43,9 +49,9 @@ class Consumer
      *
      * @throws \Exception
      */
-    public function get(ProviderInterface $provider, $url, $params = array())
+    public function get($url, $params = array())
     {
-        $request = $provider->request($url, $params);
+        $request = $this->provider->request($url, $params);
         $response = $this->client->send($request);
 
         $data = $response->getBody()->getContents();
