@@ -15,24 +15,6 @@ use Psr\Http\Message\ResponseInterface;
 
 class ConsumerTest extends \PHPUnit_Framework_TestCase
 {
-    public function test__construct()
-    {
-        $client = new Client();
-        $provider = new StandardProvider('');
-        $serializer = new \Symfony\Component\Serializer\Serializer();
-        $serializer = new Serializer($serializer);
-        $negotiator = new FormatNegotiator();
-        $consumer = new Consumer($client, $provider, $serializer, $negotiator);
-    }
-
-    /**
-     * @expectedException \PHPUnit_Framework_Error
-     */
-    public function testBrokenConstructor()
-    {
-        new Consumer();
-    }
-
     /**
      * @dataProvider responseProvider
      *
