@@ -85,7 +85,7 @@ class DiscoverProvider implements ProviderInterface
 
         if (!empty($links) && isset($params['format'])) {
             $links = array_filter($links, function ($link) use ($params) {
-                return $this->negotiator->getFormat($link[1]) && $params['format'] === $this->negotiator->getFormat($link[1]);
+                return $this->negotiator->getFormat($link[1]) !== null && $params['format'] === $this->negotiator->getFormat($link[1]);
             });
         }
 
