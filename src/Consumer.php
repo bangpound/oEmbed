@@ -71,12 +71,17 @@ class Consumer
     {
         if ($response->hasHeader('content-type')) {
             $header = $response->getHeaderLine('content-type');
+            $format = $this->negotiator->getFormat($header);
+        }
 
-            return $this->negotiator->getFormat($header);
-        }
         if (isset($params['format'])) {
-            return $params['format'];
+            $format = $params['format'];
         }
-        throw new UnknownFormatException('Unable to figure out the format');
+
+        if (!isset($format)) {
+            throw new UnknownFormatException('Unable to figure out the format');
+        }
+
+        return $format;
     }
 }

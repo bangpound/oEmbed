@@ -3,6 +3,7 @@
 namespace Bangpound\oEmbed\Test;
 
 use Bangpound\oEmbed\Consumer;
+use Bangpound\oEmbed\Negotiation\FormatNegotiator;
 use Bangpound\oEmbed\Provider\ProviderInterface;
 use Bangpound\oEmbed\Provider\StandardProvider;
 use Bangpound\oEmbed\Serializer\Serializer;
@@ -10,7 +11,6 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use Negotiation\FormatNegotiator;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
@@ -88,8 +88,7 @@ class ConsumerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Symfony\Component\Serializer\Exception\RuntimeException
-     * @expectedExceptionMessageRegExp /No decoder found for format "\w+"./
+     * @expectedException \Bangpound\oEmbed\Exception\UnknownFormatException
      */
     public function testGetUnknownContentTypeException()
     {
