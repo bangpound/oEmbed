@@ -2,7 +2,6 @@
 
 namespace Bangpound\oEmbed\Provider;
 
-use Guzzle\Http\Message\Request;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\ResponseInterface;
@@ -15,7 +14,7 @@ class DiscoverProvider implements ProviderInterface
     const LINK_XML_XPATH = '//head/link[@rel = \'alternate\' and @type = \'text/xml+oembed\']';
 
     /**
-     * @var \GuzzleHttp\ClientInterface
+     * @var ClientInterface
      */
     private $client;
 
