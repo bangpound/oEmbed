@@ -2,6 +2,7 @@
 
 namespace Bangpound\oEmbed\Provider;
 
+use Bangpound\oEmbed\Exception\UnknownFormatException;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7;
 use Negotiation\FormatNegotiatorInterface;
@@ -75,18 +76,7 @@ class DiscoverProvider implements ProviderInterface
         $request = new Psr7\Request('get', $url);
         $response = $this->client->send($request);
 
-        $params = array_merge(array('format' => null), $params);
-        switch ($params['format']) {
-            case 'json':
-                $xpath = self::LINK_JSON_XPATH;
-                break;
-            case 'xml':
-                $xpath = self::LINK_XML_XPATH;
-                break;
-            default:
-                $xpath = self::LINK_ANY_XPATH;
-                break;
-        }
+        $xpath = isset($params['format']) ? self::xpathForFormat($params['format']) : self::LINK_ANY_XPATH;
         $links = self::responseBodyOEmbedLinks($response, $xpath);
 
         if (!empty($links) && isset($params['format'])) {
@@ -96,6 +86,24 @@ class DiscoverProvider implements ProviderInterface
         }
 
         return $links;
+    }
+
+    /**
+     * @param $format
+     *
+     * @return string
+     */
+    private static function xpathForFormat($format)
+    {
+        if ($format === 'json') {
+            return self::LINK_JSON_XPATH;
+        }
+
+        if ($format === 'xml') {
+            return self::LINK_XML_XPATH;
+        }
+
+        throw new UnknownFormatException();
     }
 
     /**

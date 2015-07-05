@@ -68,6 +68,22 @@ class DiscoverProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($url, $query['url']);
     }
 
+    /**
+     * @dataProvider provideUnsupportedFormatSupport
+     * @expectedException \Bangpound\oEmbed\Exception\UnknownFormatException
+     *
+     * @param ResponseInterface $response
+     * @param array             $params
+     * @param $expected
+     */
+    public function testUnsupportedFormatSupports(
+      ResponseInterface $response,
+      array $params = array(),
+      $expected
+    ) {
+        $this->testSupport($response, $params, $expected);
+    }
+
     public function provideSupport()
     {
         return array_map(function ($value) {
@@ -91,6 +107,17 @@ class DiscoverProviderTest extends \PHPUnit_Framework_TestCase
         }, array_filter(self::fixture(), function ($value) {
             return $value['supports'];
         }));
+    }
+
+    public function provideUnsupportedFormatSupport()
+    {
+        return [
+            [
+              new Psr7\Response(200, [], '<!DOCTYPE html><html><head><link rel="alternate" type="text/xml+oembed" href="http://example.com/oembed?url=http%3A%2F%2Fsomething.com%2Fvideo%2F1&amp;format=xml" title="Example Video XML"></head><body></body></html>'),
+              ['format' => 'yaml'],
+              false,
+            ],
+        ];
     }
 
     private static function fixture()
@@ -135,13 +162,6 @@ class DiscoverProviderTest extends \PHPUnit_Framework_TestCase
             'response' => new Psr7\Response(200, [], '<!DOCTYPE html><html><head><link rel="alternate" type="text/xml+oembed" href="http://example.com/oembed?url=http%3A%2F%2Fsomething.com%2Fvideo%2F1&amp;format=xml" title="Example Video XML"></head><body></body></html>'),
             'params' => ['format' => 'json'],
             'supports' => false,
-          ],
-          [
-            'url' => 'http://something.com/video/1',
-            'response' => new Psr7\Response(200, [], '<!DOCTYPE html><html><head><link rel="alternate" type="text/xml+oembed" href="http://example.com/oembed?url=http%3A%2F%2Fsomething.com%2Fvideo%2F1&amp;format=xml" title="Example Video XML"></head><body></body></html>'),
-            'params' => ['format' => 'yaml'],
-            'supports' => false,
-            'request' => new Psr7\Request('get', 'http://example.com/oembed?url=http%3A%2F%2Fsomething.com%2Fvideo%2F1&amp;format=xml'),
           ],
           [
             'url' => '',
