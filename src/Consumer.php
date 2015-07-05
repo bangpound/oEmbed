@@ -7,7 +7,7 @@ use Bangpound\oEmbed\Provider\ProviderInterface;
 use GuzzleHttp\ClientInterface;
 use Negotiation\FormatNegotiatorInterface;
 use Psr\Http\Message\ResponseInterface;
-use Bangpound\oEmbed\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * Class Consumer.
@@ -25,7 +25,7 @@ class Consumer
     private $provider;
 
     /**
-     * @var Serializer
+     * @var SerializerInterface
      */
     private $serializer;
 
@@ -37,10 +37,10 @@ class Consumer
     /**
      * @param ClientInterface           $client
      * @param ProviderInterface         $provider
-     * @param Serializer                $serializer
+     * @param SerializerInterface       $serializer
      * @param FormatNegotiatorInterface $negotiator
      */
-    public function __construct(ClientInterface $client, ProviderInterface $provider, Serializer $serializer, FormatNegotiatorInterface $negotiator)
+    public function __construct(ClientInterface $client, ProviderInterface $provider, SerializerInterface $serializer, FormatNegotiatorInterface $negotiator)
     {
         $this->client = $client;
         $this->provider = $provider;
