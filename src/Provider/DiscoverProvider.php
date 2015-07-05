@@ -64,6 +64,12 @@ class DiscoverProvider implements ProviderInterface
         return new Psr7\Request('get', $uri);
     }
 
+    /**
+     * @param string $url
+     * @param array  $params
+     *
+     * @return array
+     */
     private function discoverLinks($url, array $params = array())
     {
         $request = new Psr7\Request('get', $url);
@@ -92,6 +98,12 @@ class DiscoverProvider implements ProviderInterface
         return $links;
     }
 
+    /**
+     * @param ResponseInterface $response
+     * @param string            $xpath
+     *
+     * @return array
+     */
     private static function responseBodyOEmbedLinks(ResponseInterface $response, $xpath)
     {
         $contents = $response->getBody()->getContents();

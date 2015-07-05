@@ -52,7 +52,7 @@ class ConsumerTest extends \PHPUnit_Framework_TestCase
       array $params = array(),
       ResponseInterface $expectedResponse
     ) {
-        // Create a mock and queue two responses.
+        // Create a mock handler and queue response.
         $mock = new MockHandler([
           $expectedResponse,
         ]);

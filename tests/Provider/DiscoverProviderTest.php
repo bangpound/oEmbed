@@ -41,7 +41,7 @@ class DiscoverProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideRequest
      *
-     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param ResponseInterface $response
      * @param $url
      * @param array $params
      * @param $expected
