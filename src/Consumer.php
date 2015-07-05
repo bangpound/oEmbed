@@ -35,9 +35,10 @@ class Consumer
     private $negotiator;
 
     /**
-     * @param ClientInterface   $client
-     * @param ProviderInterface $provider
-     * @param Serializer        $serializer
+     * @param ClientInterface           $client
+     * @param ProviderInterface         $provider
+     * @param Serializer                $serializer
+     * @param FormatNegotiatorInterface $negotiator
      */
     public function __construct(ClientInterface $client, ProviderInterface $provider, Serializer $serializer, FormatNegotiatorInterface $negotiator)
     {
