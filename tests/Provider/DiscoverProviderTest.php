@@ -3,7 +3,7 @@
 namespace Bangpound\oEmbed\Test\Provider;
 
 use Bangpound\oEmbed\Negotiation\FormatNegotiator;
-use Bangpound\oEmbed\Provider\DiscoverProvider;
+use Bangpound\oEmbed\Provider\DiscoveryProvider;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -34,7 +34,7 @@ class DiscoverProviderTest extends \PHPUnit_Framework_TestCase
         $client = new Client(['handler' => $handler]);
         $negotiator = new FormatNegotiator();
 
-        $provider = new DiscoverProvider($client, $negotiator);
+        $provider = new DiscoveryProvider($client, $negotiator);
         $this->assertEquals($expected, $provider->supports('', $params));
     }
 
@@ -57,7 +57,7 @@ class DiscoverProviderTest extends \PHPUnit_Framework_TestCase
         $client = new Client(['handler' => $handler]);
         $negotiator = new FormatNegotiator();
 
-        $provider = new DiscoverProvider($client, $negotiator);
+        $provider = new DiscoveryProvider($client, $negotiator);
         $request = $provider->request($url, $params);
         $this->assertInstanceOf(get_class($expected), $request);
         $this->assertEquals($expected->getMethod(), $request->getMethod());

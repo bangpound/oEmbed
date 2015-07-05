@@ -9,7 +9,7 @@ use Negotiation\FormatNegotiatorInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\DomCrawler\Crawler;
 
-class DiscoverProvider implements ProviderInterface
+class DiscoveryProvider implements ProviderInterface
 {
     const LINK_ANY_XPATH = '//head/link[@rel = \'alternate\' and (@type = \'application/json+oembed\' or @type = \'text/xml+oembed\')]';
     const LINK_JSON_XPATH = '//head/link[@rel = \'alternate\' and @type = \'application/json+oembed\']';
