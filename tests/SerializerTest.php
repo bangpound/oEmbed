@@ -4,7 +4,7 @@ namespace Bangpound\oEmbed\Test\Serializer;
 
 use Bangpound\oEmbed\Response\LinkResponse;
 use Bangpound\oEmbed\Response\Response;
-use Bangpound\oEmbed\Serializer\Serializer;
+use Bangpound\oEmbed\Serializer;
 
 class SerializerTest extends \PHPUnit_Framework_TestCase
 {

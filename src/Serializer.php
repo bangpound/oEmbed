@@ -1,6 +1,6 @@
 <?php
 
-namespace Bangpound\oEmbed\Serializer;
+namespace Bangpound\oEmbed;
 
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;

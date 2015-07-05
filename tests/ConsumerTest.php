@@ -6,7 +6,7 @@ use Bangpound\oEmbed\Consumer;
 use Bangpound\oEmbed\Negotiation\FormatNegotiator;
 use Bangpound\oEmbed\Provider\ProviderInterface;
 use Bangpound\oEmbed\Provider\StandardProvider;
-use Bangpound\oEmbed\Serializer\Serializer;
+use Bangpound\oEmbed\Serializer;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
