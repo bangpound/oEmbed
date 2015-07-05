@@ -101,10 +101,6 @@ class DiscoverProviderTest extends \PHPUnit_Framework_TestCase
             'params' => array(),
             'response' => new Psr7\Response(200, [], '<!DOCTYPE html><html><head><link rel="alternate" type="application/json+oembed" href="http://example.com/oembed?url=http%3A%2F%2Fsomething.com%2Fvideo%2F1&amp;format=json" title="Example Video JSON"><link rel="alternate" type="text/xml+oembed" href="http://example.com/oembed?url=http%3A%2F%2Fsomething.com%2Fvideo%2F1&amp;format=xml" title="Example Video XML"></head><body></body></html>'),
             'supports' => true,
-            'supportsWithMap' => true,
-            'map' => [
-              'application/json+oembed' => 'json',
-            ],
             'request' => new Psr7\Request('get', 'http://example.com/oembed?url=http%3A%2F%2Fsomething.com%2Fvideo%2F1&amp;format=json'),
           ],
           [
@@ -112,10 +108,6 @@ class DiscoverProviderTest extends \PHPUnit_Framework_TestCase
             'params' => array(),
             'response' => new Psr7\Response(200, [], '<!DOCTYPE html><html><head><link rel="alternate" type="application/json+oembed" href="http://example.com/oembed?url=http%3A%2F%2Fsomething.com%2Fvideo%2F1&amp;format=json" title="Example Video JSON"><link rel="alternate" type="text/xml+oembed" href="http://example.com/oembed?url=http%3A%2F%2Fsomething.com%2Fvideo%2F1&amp;format=xml" title="Example Video XML"></head><body></body></html>'),
             'supports' => true,
-            'supportsWithMap' => true,
-              'map' => [
-                'application/json+oembed' => 'json',
-              ],
             'request' => new Psr7\Request('get', 'http://example.com/oembed?url=http%3A%2F%2Fsomething.com%2Fvideo%2F1&amp;format=json'),
           ],
           [
@@ -123,10 +115,6 @@ class DiscoverProviderTest extends \PHPUnit_Framework_TestCase
             'response' => new Psr7\Response(200, [], '<!DOCTYPE html><html><head><link rel="alternate" type="application/json+oembed" href="http://example.com/oembed?url=http%3A%2F%2Fsomething.com%2Fvideo%2F1&amp;format=json" title="Example Video JSON"></head><body></body></html>'),
             'params' => ['format' => 'json'],
             'supports' => true,
-            'supportsWithMap' => true,
-            'map' => [
-              'application/json+oembed' => 'json',
-            ],
             'request' => new Psr7\Request('get', 'http://example.com/oembed?url=http%3A%2F%2Fsomething.com%2Fvideo%2F1&amp;format=json'),
           ],
           [
@@ -134,10 +122,6 @@ class DiscoverProviderTest extends \PHPUnit_Framework_TestCase
             'response' => new Psr7\Response(200, [], '<!DOCTYPE html><html><head><link rel="alternate" type="text/xml+oembed" href="http://example.com/oembed?url=http%3A%2F%2Fsomething.com%2Fvideo%2F1&amp;format=xml" title="Example Video XML"></head><body></body></html>'),
             'params' => ['format' => 'xml'],
             'supports' => true,
-            'supportsWithMap' => true,
-            'map' => [
-              'text/xml+oembed' => 'xml',
-            ],
             'request' => new Psr7\Request('get', 'http://example.com/oembed?url=http%3A%2F%2Fsomething.com%2Fvideo%2F1&amp;format=xml'),
           ],
           [
@@ -145,30 +129,18 @@ class DiscoverProviderTest extends \PHPUnit_Framework_TestCase
             'response' => new Psr7\Response(200, [], '<!DOCTYPE html><html><head><link rel="alternate" type="application/json+oembed" href="http://example.com/oembed?url=http%3A%2F%2Fsomething.com%2Fvideo%2F1&amp;format=json" title="Example Video JSON"></head><body></body></html>'),
             'params' => ['format' => 'xml'],
             'supports' => false,
-            'supportsWithMap' => false,
-            'map' => [
-              'text/xml+oembed' => 'xml',
-            ],
           ],
           [
             'url' => 'http://something.com/video/1',
             'response' => new Psr7\Response(200, [], '<!DOCTYPE html><html><head><link rel="alternate" type="text/xml+oembed" href="http://example.com/oembed?url=http%3A%2F%2Fsomething.com%2Fvideo%2F1&amp;format=xml" title="Example Video XML"></head><body></body></html>'),
             'params' => ['format' => 'json'],
             'supports' => false,
-            'supportsWithMap' => false,
-            'map' => [
-              'application/json+oembed' => 'json',
-            ],
           ],
           [
             'url' => 'http://something.com/video/1',
             'response' => new Psr7\Response(200, [], '<!DOCTYPE html><html><head><link rel="alternate" type="text/xml+oembed" href="http://example.com/oembed?url=http%3A%2F%2Fsomething.com%2Fvideo%2F1&amp;format=xml" title="Example Video XML"></head><body></body></html>'),
             'params' => ['format' => 'yaml'],
             'supports' => false,
-            'supportsWithMap' => true,
-            'map' => [
-              'text/xml+oembed' => 'yaml',
-            ],
             'request' => new Psr7\Request('get', 'http://example.com/oembed?url=http%3A%2F%2Fsomething.com%2Fvideo%2F1&amp;format=xml'),
           ],
           [
@@ -176,19 +148,12 @@ class DiscoverProviderTest extends \PHPUnit_Framework_TestCase
             'response' => new Psr7\Response(200, [], '<!DOCTYPE html><html><head></head><body></body></html>'),
             'params' => [],
             'supports' => false,
-            'supportsWithMap' => false,
-            'map' => [
-            ],
           ],
           [
             'url' => '',
             'response' => new Psr7\Response(200, [], '<!DOCTYPE html><html><head><link rel="alternate" type="application/not+oembed" href="http://deadend.com"></head><body></body></html>'),
             'params' => [],
             'supports' => false,
-            'supportsWithMap' => false,
-            'map' => [
-              'application/json+oembed' => 'json',
-            ],
           ],
         );
     }
