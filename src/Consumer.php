@@ -53,8 +53,6 @@ class Consumer
      * @param array $params
      *
      * @return array
-     *
-     * @throws \Exception
      */
     public function get($url, $params = array())
     {
@@ -67,6 +65,14 @@ class Consumer
         return $this->serializer->deserialize($data, null, $format);
     }
 
+    /**
+     * @param array             $params
+     * @param ResponseInterface $response
+     *
+     * @return null|string
+     *
+     * @throws UnknownFormatException
+     */
     private function getFormat(array $params, ResponseInterface $response)
     {
         if ($response->hasHeader('content-type')) {
