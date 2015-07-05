@@ -5,11 +5,6 @@ namespace Bangpound\oEmbed\Test\Serializer;
 use Bangpound\oEmbed\Response\LinkResponse;
 use Bangpound\oEmbed\Response\Response;
 use Bangpound\oEmbed\Serializer\Serializer;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
-use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
-use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 
 class SerializerTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,19 +12,12 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
      * @dataProvider provideSerializer
      *
      * @param Response $data
-     * @param $format
+     * @param string   $format
+     * @param string   $expected
      */
     public function testSerialize(Response $data, $format, $expected)
     {
-        $nameConverter = new CamelCaseToSnakeCaseNameConverter();
-        $serializer = new \Symfony\Component\Serializer\Serializer([
-          new PropertyNormalizer(null, $nameConverter),
-          new GetSetMethodNormalizer(null, $nameConverter),
-        ], [
-          new JsonEncoder(),
-          new XmlEncoder(),
-        ]);
-        $serializer = new Serializer($serializer);
+        $serializer = Serializer::create();
         $result = $serializer->serialize($data, $format);
         $this->assertEquals($expected, $result);
 
@@ -42,21 +30,13 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
      * @dataProvider provideSerializerWithMap
      *
      * @param Response $data
-     * @param $format
-     * @param array $map
-     * @param $expected
+     * @param string   $format
+     * @param array    $map
+     * @param string   $expected
      */
     public function testSerializeWithMap(Response $data, $format, array $map = array(), $expected)
     {
-        $nameConverter = new CamelCaseToSnakeCaseNameConverter();
-        $serializer = new \Symfony\Component\Serializer\Serializer([
-          new PropertyNormalizer(null, $nameConverter),
-          new GetSetMethodNormalizer(null, $nameConverter),
-        ], [
-          new JsonEncoder(),
-          new XmlEncoder(),
-        ]);
-        $serializer = new Serializer($serializer, $map);
+        $serializer = Serializer::create($map);
         $result = $serializer->serialize($data, $format);
         $this->assertEquals($expected, $result);
 

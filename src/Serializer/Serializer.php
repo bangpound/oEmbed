@@ -2,6 +2,11 @@
 
 namespace Bangpound\oEmbed\Serializer;
 
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer as SymfonySerializer;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -43,5 +48,19 @@ class Serializer implements SerializerInterface
     public function serialize($data, $format, array $context = array())
     {
         return $this->serializer->serialize($data, $format, $context);
+    }
+
+    public static function create(array $map = null)
+    {
+        $nameConverter = new CamelCaseToSnakeCaseNameConverter();
+        $serializer = new SymfonySerializer([
+          new PropertyNormalizer(null, $nameConverter),
+          new GetSetMethodNormalizer(null, $nameConverter),
+        ], [
+          new JsonEncoder(),
+          new XmlEncoder(),
+        ]);
+
+        return new self($serializer, $map);
     }
 }

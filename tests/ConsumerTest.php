@@ -12,11 +12,6 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
-use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
-use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 
 class ConsumerTest extends \PHPUnit_Framework_TestCase
 {
@@ -60,15 +55,7 @@ class ConsumerTest extends \PHPUnit_Framework_TestCase
         $handler = HandlerStack::create($mock);
         $client = new Client(['handler' => $handler]);
 
-        $nameConverter = new CamelCaseToSnakeCaseNameConverter();
-        $serializer = new \Symfony\Component\Serializer\Serializer([
-          new PropertyNormalizer(null, $nameConverter),
-          new GetSetMethodNormalizer(null, $nameConverter),
-        ], [
-          new JsonEncoder(),
-          new XmlEncoder(),
-        ]);
-        $serializer = new Serializer($serializer);
+        $serializer = Serializer::create();
 
         $negotiator = new FormatNegotiator();
 
