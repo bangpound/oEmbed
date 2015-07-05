@@ -2,6 +2,7 @@
 
 namespace Bangpound\oEmbed\Test;
 
+use Bangpound\oEmbed\Negotiation\FormatNegotiator;
 use Bangpound\oEmbed\Provider\DiscoverProvider;
 use Bangpound\oEmbed\Provider\ProviderResolver;
 use Bangpound\oEmbed\Provider\StandardProvider;
@@ -55,7 +56,8 @@ class ProviderDataTest extends \PHPUnit_Framework_TestCase
 
         $handler = HandlerStack::create($mock);
         $client = new Client(['handler' => $handler]);
-        $provider = new DiscoverProvider($client);
+        $negotiator = new \Bangpound\oEmbed\Negotiation\FormatNegotiator();
+        $provider = new DiscoverProvider($client, $negotiator);
         $resolver->addProvider($provider);
 
         $provider = $resolver->resolve($url, $params);

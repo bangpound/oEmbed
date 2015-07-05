@@ -4,6 +4,7 @@ namespace Bangpound\oEmbed\Provider;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7;
+use Negotiation\FormatNegotiatorInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -19,23 +20,18 @@ class DiscoverProvider implements ProviderInterface
     private $client;
 
     /**
-     * @var array
+     * @var FormatNegotiatorInterface
      */
-    private $map = array(
-      'application/json+oembed' => 'json',
-      'text/xml+oembed' => 'xml',
-    );
+    private $negotiator;
 
     /**
-     * @param \GuzzleHttp\ClientInterface $client
-     * @param array                       $map
+     * @param ClientInterface           $client
+     * @param FormatNegotiatorInterface $negotiator
      */
-    public function __construct(ClientInterface $client, array $map = null)
+    public function __construct(ClientInterface $client, FormatNegotiatorInterface $negotiator)
     {
         $this->client = $client;
-        if (isset($map)) {
-            $this->map = $map;
-        }
+        $this->negotiator = $negotiator;
     }
 
     /**
@@ -89,7 +85,7 @@ class DiscoverProvider implements ProviderInterface
 
         if (!empty($links) && isset($params['format'])) {
             $links = array_filter($links, function ($link) use ($params) {
-                return isset($this->map[$link[1]]) && $params['format'] === $this->map[$link[1]];
+                return $this->negotiator->getFormat($link[1]) && $params['format'] === $this->negotiator->getFormat($link[1]);
             });
         }
 

@@ -2,6 +2,7 @@
 
 namespace Bangpound\oEmbed\Test\Provider;
 
+use Bangpound\oEmbed\Negotiation\FormatNegotiator;
 use Bangpound\oEmbed\Provider\DiscoverProvider;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
@@ -31,8 +32,9 @@ class DiscoverProviderTest extends \PHPUnit_Framework_TestCase
 
         $handler = HandlerStack::create($mock);
         $client = new Client(['handler' => $handler]);
+        $negotiator = new FormatNegotiator();
 
-        $provider = new DiscoverProvider($client);
+        $provider = new DiscoverProvider($client, $negotiator);
         $this->assertEquals($expected, $provider->supports('', $params));
     }
 
@@ -53,69 +55,9 @@ class DiscoverProviderTest extends \PHPUnit_Framework_TestCase
 
         $handler = HandlerStack::create($mock);
         $client = new Client(['handler' => $handler]);
+        $negotiator = new FormatNegotiator();
 
-        $provider = new DiscoverProvider($client);
-        $request = $provider->request($url, $params);
-        $this->assertInstanceOf(get_class($expected), $request);
-        $this->assertEquals($expected->getMethod(), $request->getMethod());
-
-        $uri = $request->getUri();
-        $query = Psr7\parse_query($uri->getQuery());
-
-        $this->assertEquals($url, $query['url']);
-    }
-
-    /**
-     * @dataProvider provideSupportWithMap
-     *
-     * @param ResponseInterface $response
-     * @param array             $params
-     * @param array             $map
-     * @param $expected
-     */
-    public function testSupportWithMap(
-      ResponseInterface $response,
-      array $params = array(),
-      array $map = null,
-      $expected
-    ) {
-        // Create a mock and queue two responses.
-        $mock = new MockHandler([
-          $response,
-        ]);
-
-        $handler = HandlerStack::create($mock);
-        $client = new Client(['handler' => $handler]);
-
-        $provider = new DiscoverProvider($client, $map);
-        $this->assertEquals($expected, $provider->supports('', $params));
-    }
-
-    /**
-     * @dataProvider provideRequestWithMap
-     *
-     * @param \Psr\Http\Message\ResponseInterface $response
-     * @param $url
-     * @param array                              $params
-     * @param array                              $map
-     * @param \Psr\Http\Message\RequestInterface $expected
-     */
-    public function testRequestWithMap(
-      ResponseInterface $response,
-      $url,
-      array $params = array(),
-      array $map = null,
-      RequestInterface $expected)
-    {
-        // Create a mock and queue two responses.
-        $mock = new MockHandler([
-          $response,
-        ]);
-
-        $handler = HandlerStack::create($mock);
-        $client = new Client(['handler' => $handler]);
-
-        $provider = new DiscoverProvider($client, $map);
+        $provider = new DiscoverProvider($client, $negotiator);
         $request = $provider->request($url, $params);
         $this->assertInstanceOf(get_class($expected), $request);
         $this->assertEquals($expected->getMethod(), $request->getMethod());
@@ -148,33 +90,6 @@ class DiscoverProviderTest extends \PHPUnit_Framework_TestCase
             );
         }, array_filter(self::fixture(), function ($value) {
             return $value['supports'];
-        }));
-    }
-
-    public function provideSupportWithMap()
-    {
-        return array_map(function ($value) {
-            return array(
-              $value['response'],
-              $value['params'],
-              $value['map'],
-              $value['supportsWithMap'],
-            );
-        }, self::fixture());
-    }
-
-    public function provideRequestWithMap()
-    {
-        return array_map(function ($value) {
-            return array(
-              $value['response'],
-              $value['url'],
-              $value['params'],
-              $value['map'],
-              $value['request'],
-            );
-        }, array_filter(self::fixture(), function ($value) {
-            return $value['supportsWithMap'];
         }));
     }
 
