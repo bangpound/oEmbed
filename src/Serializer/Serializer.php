@@ -58,7 +58,7 @@ class Serializer implements SerializerInterface
           new GetSetMethodNormalizer(null, $nameConverter),
         ], [
           new JsonEncoder(),
-          new XmlEncoder(),
+          new XmlEncoder('oembed'),
         ]);
 
         return new self($serializer, $map);
