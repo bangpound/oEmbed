@@ -1,10 +1,10 @@
 oEmbed
 ======
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bangpound/oEmbed/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/bangpound/oEmbed/?branch=develop)
-[![Code Coverage](https://scrutinizer-ci.com/g/bangpound/oEmbed/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/bangpound/oEmbed/?branch=develop)
-[![Build Status](https://scrutinizer-ci.com/g/bangpound/oEmbed/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/bangpound/oEmbed/build-status/develop)
-[![Build Status](https://travis-ci.org/bangpound/oEmbed.svg?branch=develop)](https://travis-ci.org/bangpound/oEmbed)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bangpound/oEmbed/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/bangpound/oEmbed/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/bangpound/oEmbed/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/bangpound/oEmbed/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/bangpound/oEmbed/badges/build.png?b=master)](https://scrutinizer-ci.com/g/bangpound/oEmbed/build-status/master)
+[![Build Status](https://travis-ci.org/bangpound/oEmbed.svg?branch=master)](https://travis-ci.org/bangpound/oEmbed)
 
 ## Install
 
